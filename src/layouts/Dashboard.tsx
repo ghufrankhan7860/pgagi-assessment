@@ -18,7 +18,7 @@ const Dashboard = () => {
             </div>
 
             <div
-                className="fixed flex flex-col flex-grow transition-all duration-300 w-full"
+                className=" flex flex-col flex-grow transition-all duration-300 w-full"
                 style={{
                     marginLeft: isSidebarCollapsed ? "5rem" : "16rem",
                     width: `calc(100% - ${

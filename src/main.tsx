@@ -22,7 +22,7 @@ const appRouter = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Newsfeed />,
+                element: <Feed />,
             },
             {
                 path: "feed",
