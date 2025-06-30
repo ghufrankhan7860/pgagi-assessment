@@ -36,13 +36,12 @@ const Newsfeed = () => {
 
             // waiting till all fetch promises resolve
             const articlesArrays = await Promise.all(fetchPromises);
-            console.log("Fetched articles arrays:", articlesArrays);
+
             // Flatten the array of arrays into a single array of articles
             const allArticles = articlesArrays.flat();
 
             // Set all articles at once to avoid multiple re-renders
             setNewsArticles(allArticles);
-            console.log("Fetched news articles:", allArticles);
         } catch (error) {
             console.error("Error fetching news articles:", error);
         } finally {

@@ -14,7 +14,6 @@ export const fetchNews = async (
         endPoint === "top-headlines"
             ? `${BASE_URL}/top-headlines?category=${category}&apiKey=${API_KEY}`
             : `${BASE_URL}/everything?q=${query}&apiKey=${API_KEY}`;
-    console.log("Fetching news from URL:", url);
 
     try {
         const response = await fetch(url);
@@ -22,7 +21,7 @@ export const fetchNews = async (
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data: { articles: ApiArticle[] } = await response.json();
-        console.log("Fetched news data:", data);
+
         return data.articles.map((article: ApiArticle) => ({
             id: article.url,
             title: article.title,

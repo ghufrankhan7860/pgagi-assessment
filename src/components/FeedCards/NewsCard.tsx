@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import type { NewsArticle } from "../../types/index";
 
 interface NewsCardProps {
@@ -7,20 +7,19 @@ interface NewsCardProps {
 
 const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
     const { title, description, url, category, imageUrl } = article;
+    // Add state to track image load failures
+    const [imageError, setImageError] = useState(false);
 
     return (
         <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full border border-gray-200">
             {/* Image container with consistent aspect ratio */}
             <div className="relative pt-[56.25%] bg-gray-200 overflow-hidden">
-                {imageUrl ? (
+                {imageUrl && !imageError ? (
                     <img
                         src={imageUrl}
                         alt={title || "News article"}
                         className="absolute top-0 left-0 w-full h-full object-cover transition-transform hover:scale-105 duration-300"
-                        onError={(e) => {
-                            (e.target as HTMLImageElement).src =
-                                "https://via.placeholder.com/300x200?text=No+Image+Available";
-                        }}
+                        onError={() => setImageError(true)}
                     />
                 ) : (
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-gray-100">

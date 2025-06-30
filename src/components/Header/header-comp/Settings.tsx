@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
-import { useState } from "react";
-import { setCategories } from "../../../store/preferencesSlice";
+import { useEffect, useState } from "react";
+import { setCategories, setQueries } from "../../../store/preferencesSlice";
 import { availableCategories } from "../../../constants/constants";
 
 const Settings = () => {
     const [currSelected, setCurrSelected] = useState<string>("");
     const [isPanelOpen, setIsPanelOpen] = useState(false);
-
+    const [currQuery, setCurrQuery] = useState("");
     const dispatch = useDispatch();
     const selectedCategories = useSelector(
         (store: RootState) => store.preferences.categories
@@ -24,12 +24,24 @@ const Settings = () => {
         }
         setCurrSelected("");
     };
+    const handleSelectQueries = (query: string) => {
+        if (selectedQueries.includes(query) === false) {
+            const newQueries = [...selectedQueries, query];
+            dispatch(setQueries(newQueries));
+        }
+        setCurrQuery("");
+    };
 
     const handleRemoveCategory = (category: string) => {
         const newCategories = selectedCategories.filter(
             (cat) => cat !== category
         );
         dispatch(setCategories(newCategories));
+    };
+
+    const handleRemoveQueries = (query: string) => {
+        const newQueries = selectedQueries.filter((que) => que !== query);
+        dispatch(setQueries(newQueries));
     };
 
     const togglePanel = () => {
@@ -75,8 +87,9 @@ const Settings = () => {
                         : "opacity-0 scale-y-0 pointer-events-none"
                 }`}
             >
-                <div className="p-6">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center justify-between">
+                {/* Category Panel */}
+                <div className="px-6 pt-6">
+                    <h2 className="text-lg font-bold text-gray-600 mb-4 flex items-center justify-between">
                         <span>Category Settings</span>
                         <button
                             onClick={togglePanel}
@@ -89,19 +102,15 @@ const Settings = () => {
 
                     {/* Selected categories list */}
                     <div className="flex flex-col mb-6">
-                        <label className="text-sm font-medium text-gray-600 mb-2">
-                            Selected Categories
-                        </label>
-
                         {selectedCategories.length ? (
                             <div className="flex flex-wrap border-2 border-gray-200 rounded-lg p-4 bg-gray-50">
-                                <p className="w-full text-gray-500 text-sm mb-2">
+                                <p className="w-full text-gray-500 text-xs mb-2">
                                     Opted categories:
                                 </p>
                                 {selectedCategories.map((category) => (
                                     <div
                                         key={category}
-                                        className="bg-blue-100 border border-blue-200 text-blue-800 w-fit px-3 py-1 m-1 rounded-full flex items-center shadow-sm transition-all hover:shadow-md"
+                                        className="bg-blue-100 text-xs border border-blue-200 text-blue-800 w-fit px-3 py-1 m-1 rounded-full flex items-center shadow-sm transition-all hover:shadow-md"
                                     >
                                         <span className="mr-2">{category}</span>
                                         <button
@@ -117,7 +126,7 @@ const Settings = () => {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-gray-500 italic p-4 border-2 border-dashed border-gray-200 rounded-lg text-center">
+                            <p className="text-gray-500 text-sm italic p-4 border-2 border-dashed border-gray-200 rounded-lg text-center">
                                 No categories selected
                             </p>
                         )}
@@ -127,29 +136,91 @@ const Settings = () => {
                     <div className="mb-4">
                         <label
                             htmlFor="category-select"
-                            className="block text-sm font-medium text-gray-600 mb-2"
+                            className="block text-sm font-medium text-gray-600 mb-2 text-xs"
                         >
                             Add Category
                         </label>
                         <select
                             id="category-select"
-                            className="w-full py-2 px-3 border-2 border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full text-sm py-2 px-3 border-2 border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                             value={currSelected}
                             onChange={(e) => {
                                 setCurrSelected(e.target.value);
                                 handleSelectCategory(e.target.value);
                             }}
                         >
-                            <option value="" disabled>
+                            <option
+                                className="text-sm text-gray-600"
+                                value=""
+                                disabled
+                            >
                                 Select category
                             </option>
                             {availableCategories.map((category) => (
-                                <option key={category} value={category}>
+                                <option
+                                    className="text-sm text-gray-600"
+                                    key={category}
+                                    value={category}
+                                >
                                     {category}
                                 </option>
                             ))}
                         </select>
                     </div>
+                </div>
+
+                {/* Queries section */}
+                <div className="px-6 pb-6">
+                    <h2 className="text-lg font-bold text-gray-600 mb-4 flex items-center justify-between">
+                        <span>Queries</span>
+                    </h2>
+
+                    {/* // Selected queries list */}
+                    <div className="flex flex-col mb-6">
+                        {selectedQueries.length ? (
+                            <div className="flex flex-wrap border-2 border-gray-200 rounded-lg p-4 bg-gray-50">
+                                <p className="w-full text-gray-500 text-xs mb-2">
+                                    Queries:
+                                </p>
+                                {selectedQueries.map((query) => (
+                                    <div
+                                        key={query}
+                                        className="bg-blue-100 text-xs border border-blue-200 text-blue-800 w-fit px-3 py-1 m-1 rounded-full flex items-center shadow-sm transition-all hover:shadow-md"
+                                    >
+                                        <span className="mr-2">{query}</span>
+                                        <button
+                                            className="bg-blue-200 hover:bg-red-400 text-blue-800 hover:text-white rounded-full w-5 h-5 flex items-center justify-center transition-colors"
+                                            onClick={() =>
+                                                handleRemoveQueries(query)
+                                            }
+                                            aria-label={`Remove ${query}`}
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-gray-500 text-sm italic p-2 border-2 border-dashed border-gray-200 rounded-lg text-center">
+                                No Queries selected
+                            </p>
+                        )}
+                    </div>
+                    <input
+                        type="text"
+                        value={currQuery}
+                        className="w-full text-sm py-2 px-3 border-2 border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Search Query..."
+                        onChange={(e) => {
+                            setCurrQuery(e.target.value);
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" && currQuery.trim() !== "") {
+                                handleSelectQueries(currQuery.trim());
+                                setCurrQuery("");
+                            }
+                        }}
+                    />
                 </div>
             </div>
         </div>

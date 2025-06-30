@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface PreferencesState {
     categories: string[];
-    queries?: string[];
+    queries: string[];
 }
 // fetch saved categories and queries from localStorage
 const getSavedCategories = (): string[] => {
@@ -23,9 +23,6 @@ const getSavedQueries = (): string[] => {
         return [];
     }
 };
-
-
-
 
 const initialState: PreferencesState = {
     categories: getSavedCategories(),
