@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
 import {
@@ -239,7 +239,7 @@ const NewsSettings = () => {
 const MoviesSettings = () => {
     const [currSelected, setCurrSelected] = useState<string>("");
     const [isPanelOpen, setIsPanelOpen] = useState(false);
-    const [currmQuery, setCurrmQuery] = useState("");
+    // const [currmQuery, setCurrmQuery] = useState("");
     const dispatch = useDispatch();
     const availableMovieGenre = availableMovieGenres.map((genre) => genre.name);
     const selectedGenres = useSelector(
@@ -257,23 +257,23 @@ const MoviesSettings = () => {
         }
         setCurrSelected("");
     };
-    const handleSelectmQueries = (mQuery: string) => {
-        if (selectedmQueries.includes(mQuery) === false) {
-            const newQueries = [...selectedmQueries, mQuery];
-            dispatch(setmQueries(newQueries));
-        }
-        setCurrmQuery("");
-    };
+    // const handleSelectmQueries = (mQuery: string) => {
+    //     if (selectedmQueries.includes(mQuery) === false) {
+    //         const newQueries = [...selectedmQueries, mQuery];
+    //         dispatch(setmQueries(newQueries));
+    //     }
+    //     setCurrmQuery("");
+    // };
 
     const handleRemoveGenre = (genre: string) => {
         const newGenres = selectedGenres.filter((cat) => cat !== genre);
         dispatch(setGenres(newGenres));
     };
 
-    const handleRemovemQueries = (mQuery: string) => {
-        const newQueries = selectedmQueries.filter((que) => que !== mQuery);
-        dispatch(setmQueries(newQueries));
-    };
+    // const handleRemovemQueries = (mQuery: string) => {
+    //     const newQueries = selectedmQueries.filter((que) => que !== mQuery);
+    //     dispatch(setmQueries(newQueries));
+    // };
 
     const togglePanel = () => {
         setIsPanelOpen(!isPanelOpen);

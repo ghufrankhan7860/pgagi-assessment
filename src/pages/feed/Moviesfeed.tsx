@@ -35,7 +35,7 @@ const Moviesfeed = () => {
                     async (genre: string) => {
                         const movies = await fetchMovies(genre);
 
-                        return movies[0]?.data?.results || [];
+                        return movies || [];
                     }
                 );
                 const moviesArray = await Promise.all(fetchPromises);

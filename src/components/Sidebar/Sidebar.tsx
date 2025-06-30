@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 interface SidebarProps {
     onToggleCollapse?: (isCollapsed: boolean) => void;
@@ -70,7 +70,6 @@ const sidebarItems = [
 
 const Sidebar = ({ onToggleCollapse }: SidebarProps) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
-    const location = useLocation();
 
     const toggleSidebar = () => {
         const newCollapsedState = !isCollapsed;

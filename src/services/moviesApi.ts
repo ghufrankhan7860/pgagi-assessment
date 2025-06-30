@@ -22,8 +22,6 @@ export const fetchMovies = async (genre?: string) => {
     };
     const response = await fetch(url, options);
     const data = await response.json();
-
-    return data.results.map((movie: any) => ({
-        data,
-    }));
+    console.log("Fetched movies data:", data.results);
+    return data.results;
 };
