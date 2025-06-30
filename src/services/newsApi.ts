@@ -5,13 +5,15 @@ const BASE_URL = "https://newsapi.org/v2";
 // https://newsapi.org/v2/top-headlines?category=business&apiKey=17a5b9628c6041769270728492ea1cd1
 // ${BASE_URL}/top-headlines?country=in&category=${category}&apiKey=${API_KEY}
 
-export const fetchNews = async (category: string): Promise<NewsArticle[]> => {
-    if (!category || category === "") {
-        console.warn("NO category provided. Returning empty news list.");
-        return [];
-    }
-
-    const url = `${BASE_URL}/top-headlines?category=${category}&apiKey=${API_KEY}`;
+export const fetchNews = async (
+    category: string,
+    endPoint: string,
+    query?: string
+): Promise<NewsArticle[]> => {
+    const url =
+        endPoint === "top-headlines"
+            ? `${BASE_URL}/top-headlines?category=${category}&apiKey=${API_KEY}`
+            : `${BASE_URL}/everything?q=${query}&apiKey=${API_KEY}`;
     console.log("Fetching news from URL:", url);
 
     try {

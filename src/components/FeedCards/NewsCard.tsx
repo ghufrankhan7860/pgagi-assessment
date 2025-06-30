@@ -1,11 +1,11 @@
 import React from "react";
-import type { NewsArticle } from "../types/index";
+import type { NewsArticle } from "../../types/index";
 
-interface ArticleCardProps {
+interface NewsCardProps {
     article: NewsArticle;
 }
 
-const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
+const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
     const { title, description, url, category, imageUrl } = article;
 
     return (
@@ -84,4 +84,4 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
     );
 };
 
-export default ArticleCard;
+export default NewsCard;

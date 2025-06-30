@@ -2,8 +2,9 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface PreferencesState {
     categories: string[];
+    queries?: string[];
 }
-
+// fetch saved categories and queries from localStorage
 const getSavedCategories = (): string[] => {
     try {
         const savedCategories = localStorage.getItem("categories");
@@ -13,9 +14,22 @@ const getSavedCategories = (): string[] => {
         return [];
     }
 };
+const getSavedQueries = (): string[] => {
+    try {
+        const savedQueries = localStorage.getItem("queries");
+        return savedQueries ? JSON.parse(savedQueries) : [];
+    } catch (error) {
+        console.error("Error loading queries from localStorage:", error);
+        return [];
+    }
+};
+
+
+
 
 const initialState: PreferencesState = {
     categories: getSavedCategories(),
+    queries: getSavedQueries(),
 };
 
 const preferencesSlice = createSlice({
@@ -24,7 +38,7 @@ const preferencesSlice = createSlice({
     reducers: {
         setCategories(state, action: PayloadAction<string[]>) {
             state.categories = action.payload;
-            // Save to localStorage whenever categories are updated
+
             try {
                 localStorage.setItem(
                     "categories",
@@ -37,8 +51,17 @@ const preferencesSlice = createSlice({
                 );
             }
         },
+        setQueries(state, action: PayloadAction<string[]>) {
+            state.queries = action.payload;
+
+            try {
+                localStorage.setItem("queries", JSON.stringify(action.payload));
+            } catch (error) {
+                console.error("Error saving queries to localStorage:", error);
+            }
+        },
     },
 });
 
-export const { setCategories } = preferencesSlice.actions;
+export const { setCategories, setQueries } = preferencesSlice.actions;
 export default preferencesSlice.reducer;
