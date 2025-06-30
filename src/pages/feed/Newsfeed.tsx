@@ -59,8 +59,8 @@ const Newsfeed = () => {
     }, [selectedCategories]);
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-6">News Aggregator</h1>
+        <div className="container mx-auto px-4 pb-4">
+            <h1 className="text-3xl font-bold mb-4">News Feed</h1>
 
             {loading ? (
                 <div className="flex justify-center my-12">
@@ -89,11 +89,12 @@ const Newsfeed = () => {
                     </div>
                 </div>
             ) : (
-                <div className="mt-8">
+                <div className="mt-1">
                     {newsArticles.length > 0 ? (
                         <div>
                             <h2 className="text-xl font-semibold mb-6 pb-2 border-b border-gray-200">
-                                Latest News ({newsArticles.length} articles)
+                                Personalized Feed ({newsArticles.length}{" "}
+                                articles)
                             </h2>
                             {/* Grid layout for article cards */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -3,6 +3,8 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 interface PreferencesState {
     categories: string[];
     queries: string[];
+    genres: string[];
+    mQueries: string[];
 }
 // fetch saved categories and queries from localStorage
 const getSavedCategories = (): string[] => {
@@ -24,9 +26,30 @@ const getSavedQueries = (): string[] => {
     }
 };
 
+// fetch saved genres and mQueries from localStorage
+const getSavedGenres = (): string[] => {
+    try {
+        const savedGenres = localStorage.getItem("genres");
+        return savedGenres ? JSON.parse(savedGenres) : [];
+    } catch (error) {
+        console.error("Error loading genres from localStorage:", error);
+        return [];
+    }
+};
+const getSavedmQueries = (): string[] => {
+    try {
+        const savedmQueries = localStorage.getItem("mQueries");
+        return savedmQueries ? JSON.parse(savedmQueries) : [];
+    } catch (error) {
+        console.error("Error loading mQueries from localStorage:", error);
+        return [];
+    }
+};
 const initialState: PreferencesState = {
     categories: getSavedCategories(),
     queries: getSavedQueries(),
+    genres: getSavedGenres(),
+    mQueries: getSavedmQueries(),
 };
 
 const preferencesSlice = createSlice({
@@ -57,8 +80,30 @@ const preferencesSlice = createSlice({
                 console.error("Error saving queries to localStorage:", error);
             }
         },
+        setGenres(state, action: PayloadAction<string[]>) {
+            state.genres = action.payload;
+
+            try {
+                localStorage.setItem("genres", JSON.stringify(action.payload));
+            } catch (error) {
+                console.error("Error saving genres to localStorage:", error);
+            }
+        },
+        setmQueries(state, action: PayloadAction<string[]>) {
+            state.mQueries = action.payload;
+
+            try {
+                localStorage.setItem(
+                    "mQueries",
+                    JSON.stringify(action.payload)
+                );
+            } catch (error) {
+                console.error("Error saving mQueries to localStorage:", error);
+            }
+        },
     },
 });
 
-export const { setCategories, setQueries } = preferencesSlice.actions;
+export const { setCategories, setQueries, setGenres, setmQueries } =
+    preferencesSlice.actions;
 export default preferencesSlice.reducer;

@@ -4,8 +4,6 @@ import { setCategories } from "../../../store/preferencesSlice";
 import { availableCategories } from "../../../constants/constants";
 import { useState } from "react";
 
-const CategorySetting = () => {
-    
-};
+const CategorySetting = () => {};
 
 export default CategorySetting;

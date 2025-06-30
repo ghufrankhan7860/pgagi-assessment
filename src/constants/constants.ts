@@ -8,3 +8,38 @@ export const availableCategories = [
     "health",
     "science",
 ];
+
+export const availableMovieGenres = [
+    "Action",
+    "Adventure",
+    "Animation",
+    "Biography",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Family",
+    "Fantasy",
+    "Film-Noir",
+    "History",
+    "Horror",
+    "Music",
+    "Musical",
+    "Mystery",
+    "Romance",
+    "Sci-Fi",
+    "Short",
+    "Sport",
+    "Superhero",
+    "Thriller",
+    "War",
+    "Western",
+];
+
+export const movieQueries = [
+    "popular",
+    "top_rated",
+    "upcoming",
+    "now_playing",
+    "latest",
+];
