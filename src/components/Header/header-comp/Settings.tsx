@@ -4,7 +4,6 @@ import type { RootState } from "../../../store/store";
 import {
     setCategories,
     setGenres,
-    setmQueries,
     setQueries,
 } from "../../../store/preferencesSlice";
 import {
