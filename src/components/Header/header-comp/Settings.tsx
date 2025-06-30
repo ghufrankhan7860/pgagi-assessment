@@ -241,6 +241,7 @@ const MoviesSettings = () => {
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const [currmQuery, setCurrmQuery] = useState("");
     const dispatch = useDispatch();
+    const availableMovieGenre = availableMovieGenres.map((genre) => genre.name);
     const selectedGenres = useSelector(
         (store: RootState) => store.preferences.genres
     );
@@ -317,7 +318,7 @@ const MoviesSettings = () => {
                         : "opacity-0 scale-y-0 pointer-events-none"
                 }`}
             >
-                {/* Category Panel */}
+                {/* Genres Panel */}
                 <div className="px-6 pt-6">
                     <h2 className="text-lg font-bold text-gray-600 mb-4 flex items-center justify-between">
                         <span>Movie Generes</span>
@@ -386,7 +387,7 @@ const MoviesSettings = () => {
                             >
                                 Select Genre
                             </option>
-                            {availableMovieGenres.map((genre) => (
+                            {availableMovieGenre.map((genre) => (
                                 <option
                                     className="text-sm text-gray-600"
                                     key={genre}
@@ -398,60 +399,6 @@ const MoviesSettings = () => {
                         </select>
                     </div>
                 </div>
-
-                {/* Queries section */}
-                <div className="px-6 pb-6">
-                    <h2 className="text-lg font-bold text-gray-600 mb-4 flex items-center justify-between">
-                        <span>Movie Queries</span>
-                    </h2>
-
-                    {/* // Selected queries list */}
-                    <div className="flex flex-col mb-6">
-                        {selectedmQueries.length ? (
-                            <div className="flex flex-wrap border-2 border-gray-200 max-h-50 overflow-auto rounded-lg p-4 bg-gray-50">
-                                <p className="w-full text-gray-500 text-xs mb-2">
-                                    Movie-Queries:
-                                </p>
-                                {selectedmQueries.map((mQuery) => (
-                                    <div
-                                        key={mQuery}
-                                        className="bg-blue-100 text-xs border border-blue-200 text-blue-800 w-fit px-3 py-1 m-1 rounded-full flex items-center shadow-sm transition-all hover:shadow-md"
-                                    >
-                                        <span className="mr-2">{mQuery}</span>
-                                        <button
-                                            className="bg-blue-200 hover:bg-red-400 text-blue-800 hover:text-white rounded-full w-5 h-5 flex items-center justify-center transition-colors"
-                                            onClick={() =>
-                                                handleRemovemQueries(mQuery)
-                                            }
-                                            aria-label={`Remove ${mQuery}`}
-                                        >
-                                            ×
-                                        </button>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <p className="text-gray-500 text-sm italic p-2 border-2 border-dashed border-gray-200 rounded-lg text-center">
-                                No Movie Queries selected
-                            </p>
-                        )}
-                    </div>
-                    <input
-                        type="text"
-                        value={currmQuery}
-                        className="w-full text-sm py-2 px-3 border-2 border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Search Movie Query..."
-                        onChange={(e) => {
-                            setCurrmQuery(e.target.value);
-                        }}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter" && currmQuery.trim() !== "") {
-                                handleSelectmQueries(currmQuery.trim());
-                                setCurrmQuery("");
-                            }
-                        }}
-                    />
-                </div>
             </div>
         </div>
     );
@@ -460,7 +407,7 @@ const MoviesSettings = () => {
 const Settings = () => {
     const location = useLocation();
     const currentPath = location.pathname;
-    console.log("Current Path:", currentPath);
+
     return (
         <>
             {currentPath === "/feed" ||
