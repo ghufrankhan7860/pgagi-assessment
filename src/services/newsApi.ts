@@ -21,7 +21,7 @@ export const fetchNews = async (
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data: { articles: ApiArticle[] } = await response.json();
-
+        console.log("Fetched news data:", data.articles);
         return data.articles.map((article: ApiArticle) => ({
             id: article.url,
             title: article.title,
