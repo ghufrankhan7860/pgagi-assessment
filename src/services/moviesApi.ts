@@ -1,7 +1,7 @@
 import { availableMovieGenres } from "../constants/constants";
 const getIdFromGenre = (genre: string) => {
     const genreObj = availableMovieGenres.find((g) => g.name === genre);
-    console.log("Genre object:", genreObj?.id);
+
     return genreObj ? genreObj.id : 0;
 };
 
@@ -22,6 +22,6 @@ export const fetchMovies = async (genre?: string) => {
     };
     const response = await fetch(url, options);
     const data = await response.json();
-    console.log("Fetched movies data:", data.results);
+
     return data.results;
 };

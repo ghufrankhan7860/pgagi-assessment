@@ -25,8 +25,8 @@ const Moviestrend = () => {
             try {
                 setLoading(true);
                 const response = await fetchMovies();
-                const moviesArr = response[0]?.data?.results;
-                console.log("Fetched movies:", moviesArr);
+                const moviesArr = response;
+
                 setMovies(moviesArr || []);
                 setLoading(false);
             } catch (error) {
