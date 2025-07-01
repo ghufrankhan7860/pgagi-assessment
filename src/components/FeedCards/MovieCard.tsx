@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setFavMovies } from "../../store/favSlice";
+import type { RootState } from "../../store/store";
 
 interface Movie {
     id: number;
@@ -13,10 +16,12 @@ interface Movie {
 
 interface MovieCardProps {
     movie: Movie;
+    onFavoriteToggle?: (id: number, isFavorite: boolean) => void;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ movie, onFavoriteToggle }) => {
     const {
+        id,
         title,
         overview,
         poster_path,
@@ -24,20 +29,59 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         release_date,
         popularity,
     } = movie;
-    // Add state to track image load failures
+
     const [imageError, setImageError] = useState(false);
 
-    // Format the image URL
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    const selectedFavMovies = useSelector(
+        (store: RootState) => store.fav.favMovies
+    );
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const isAlreadyFavorite = selectedFavMovies.some(
+            (favMovie) => favMovie.id === id
+        );
+        setIsFavorite(isAlreadyFavorite);
+    }, [selectedFavMovies, id]);
+
     const imageUrl = poster_path
         ? `https://image.tmdb.org/t/p/w500${poster_path}`
         : null;
 
-    // Format release date
     const formattedDate = new Date(release_date).toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
     });
+
+    // Handle favorite toggle
+
+    const handleFavoriteToggle = (e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent card click events
+        const newState = !isFavorite;
+        setIsFavorite(newState);
+
+        // Update Redux store
+        if (newState) {
+            // Add to favorites
+            const updatedFavorites = [...selectedFavMovies, movie];
+            dispatch(setFavMovies(updatedFavorites));
+        } else {
+            // Remove from favorites
+            const updatedFavorites = selectedFavMovies.filter(
+                (favMovie) => favMovie.id !== id
+            );
+            dispatch(setFavMovies(updatedFavorites));
+        }
+
+        // Call the callback if provided
+        if (onFavoriteToggle) {
+            onFavoriteToggle(id, newState);
+        }
+    };
 
     return (
         <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full border border-gray-200">
@@ -57,6 +101,35 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
                         </span>
                     </div>
                 )}
+
+                {/* Heart button for favorites - positioned in top left */}
+                <button
+                    className="absolute top-2 left-2 p-1.5 bg-white bg-opacity-80 rounded-full hover:bg-opacity-100 transition-all duration-200 shadow-sm z-10"
+                    onClick={handleFavoriteToggle}
+                    aria-label={
+                        isFavorite
+                            ? "Remove from favorites"
+                            : "Add to favorites"
+                    }
+                >
+                    <svg
+                        className={`w-5 h-5 ${
+                            isFavorite
+                                ? "text-red-500 fill-current"
+                                : "text-gray-400 hover:text-red-500"
+                        }`}
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={isFavorite ? "0" : "2"}
+                        fill={isFavorite ? "currentColor" : "none"}
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                        />
+                    </svg>
+                </button>
 
                 {/* Rating badge */}
                 <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center">
@@ -104,7 +177,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
                             Popularity: {popularity.toFixed(1)}
                         </div>
                         <a
-                            href={`https://www.themoviedb.org/movie/${movie.id}`}
+                            href={`https://www.themoviedb.org/movie/${id}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-600 hover:text-blue-800 transition-colors inline-flex items-center"

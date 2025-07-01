@@ -1,14 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { NewsArticle } from "../../types/index";
+import { useDispatch, useSelector } from "react-redux";
+import { setFavNews } from "../../store/favSlice";
+import type { RootState } from "../../store/store";
 
 interface NewsCardProps {
     article: NewsArticle;
+    onFavoriteToggle?: (id: string, isFavorite: boolean) => void;
 }
 
-const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
-    const { title, description, url, category, imageUrl } = article;
+const NewsCard: React.FC<NewsCardProps> = ({ article, onFavoriteToggle }) => {
+    const { id, title, description, url, category, imageUrl } = article;
     // Add state to track image load failures
     const [imageError, setImageError] = useState(false);
+    // Add state to track favorite status
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    const selectedFavNews = useSelector(
+        (store: RootState) => store.fav.favNews || []
+    );
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const isAlreadyFavorite = selectedFavNews.some(
+            (favArticle) => favArticle.id === id
+        );
+        setIsFavorite(isAlreadyFavorite);
+    }, [selectedFavNews, id]);
+
+    const handleFavoriteToggle = (e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent card click events
+        e.preventDefault(); // Prevent link navigation
+
+        const newState = !isFavorite;
+        setIsFavorite(newState);
+
+        // Update Redux store
+        if (newState) {
+            // Add to favorites
+            const updatedFavorites = [...selectedFavNews, article];
+            dispatch(setFavNews(updatedFavorites));
+        } else {
+            // Remove from favorites
+            const updatedFavorites = selectedFavNews.filter(
+                (favArticle) => favArticle.id !== id
+            );
+            dispatch(setFavNews(updatedFavorites));
+        }
+
+        // Call the callback if provided
+        if (onFavoriteToggle) {
+            onFavoriteToggle(id, newState);
+        }
+    };
 
     return (
         <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full border border-gray-200">
@@ -28,6 +73,35 @@ const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
                         </span>
                     </div>
                 )}
+
+                {/* Heart button for favorites - positioned in top left */}
+                <button
+                    className="absolute top-2 left-2 p-1.5 bg-white bg-opacity-80 rounded-full hover:bg-opacity-100 transition-all duration-200 shadow-sm z-10"
+                    onClick={handleFavoriteToggle}
+                    aria-label={
+                        isFavorite
+                            ? "Remove from favorites"
+                            : "Add to favorites"
+                    }
+                >
+                    <svg
+                        className={`w-5 h-5 ${
+                            isFavorite
+                                ? "text-red-500 fill-current"
+                                : "text-gray-400 hover:text-red-500"
+                        }`}
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={isFavorite ? "0" : "2"}
+                        fill={isFavorite ? "currentColor" : "none"}
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                        />
+                    </svg>
+                </button>
 
                 {/* Category badge */}
                 {category && (
