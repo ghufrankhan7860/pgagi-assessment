@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Header from "../components/Header/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 const Dashboard = () => {
-    const currPath = window.location.pathname;
-    console.log("Current Path:", currPath);
+    const currPath = useLocation().pathname;
+
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
     const handleSidebarToggle = (collapsed: boolean) => {
