@@ -24,7 +24,7 @@ const sidebarItems = [
                 />
             </svg>
         ),
-        path: "feed",
+        path: "feed/news",
     },
     {
         title: "Trending",
@@ -44,7 +44,7 @@ const sidebarItems = [
                 />
             </svg>
         ),
-        path: "trending",
+        path: "trending/news",
     },
     {
         title: "Favourite",
@@ -64,7 +64,7 @@ const sidebarItems = [
                 />
             </svg>
         ),
-        path: "fav",
+        path: "fav/news",
     },
 ];
 
