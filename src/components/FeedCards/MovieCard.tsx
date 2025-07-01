@@ -34,15 +34,15 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onFavoriteToggle }) => {
 
     const [isFavorite, setIsFavorite] = useState(false);
 
-    const selectedFavMovies = useSelector(
-        (store: RootState) => store.fav.favMovies
+    const selectedFavMovies = useSelector<RootState, Movie[]>(
+        (store: RootState) => store.fav.favMovies as []
     );
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         const isAlreadyFavorite = selectedFavMovies.some(
-            (favMovie) => favMovie.id === id
+            (favMovie: Movie) => favMovie.id === id
         );
         setIsFavorite(isAlreadyFavorite);
     }, [selectedFavMovies, id]);

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { fetchMovies } from "../../services/moviesApi";
 import MovieCard from "../../components/FeedCards/MovieCard";
 import { useSelector } from "react-redux";

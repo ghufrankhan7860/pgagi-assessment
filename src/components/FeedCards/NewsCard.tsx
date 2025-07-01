@@ -16,8 +16,8 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, onFavoriteToggle }) => {
     // Add state to track favorite status
     const [isFavorite, setIsFavorite] = useState(false);
 
-    const selectedFavNews = useSelector(
-        (store: RootState) => store.fav.favNews || []
+    const selectedFavNews = useSelector<RootState, NewsArticle[]>(
+        (store: RootState) => store.fav.favNews as []
     );
 
     const dispatch = useDispatch();
