@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import type { NewsArticle } from "../../types";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
@@ -8,6 +8,8 @@ import NewsCard from "../../components/FeedCards/NewsCard";
 const Newsfeed = () => {
     const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
     const [loading, setLoading] = useState(false);
+    const [displayCount, setDisplayCount] = useState(9); // Start with 9 articles
+    const loaderRef = useRef<HTMLDivElement>(null);
 
     const selectedCategories = useSelector(
         (store: RootState) => store.preferences.categories
@@ -16,8 +18,8 @@ const Newsfeed = () => {
     const getNews = async () => {
         try {
             setLoading(true);
-
             setNewsArticles([]);
+            setDisplayCount(9); // Reset display count when fetching new articles
 
             const fetchPromises = selectedCategories.map(
                 async (category: string) => {
@@ -55,8 +57,42 @@ const Newsfeed = () => {
             getNews();
         } else {
             setNewsArticles([]);
+            setDisplayCount(9); // Reset display count when clearing articles
         }
     }, [selectedCategories]);
+
+    // Set up intersection observer for infinite scrolling
+    useEffect(() => {
+        if (loading || newsArticles.length === 0) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const [entry] = entries;
+                if (
+                    entry.isIntersecting &&
+                    !loading &&
+                    displayCount < newsArticles.length
+                ) {
+                    setDisplayCount((prevCount) => prevCount + 9);
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (loaderRef.current) {
+            observer.observe(loaderRef.current);
+        }
+
+        return () => {
+            if (loaderRef.current) {
+                observer.unobserve(loaderRef.current);
+            }
+        };
+    }, [displayCount, loading, newsArticles.length]);
+
+    // Get only the articles we want to display currently
+    const visibleArticles = newsArticles.slice(0, displayCount);
+    const hasMoreArticles = displayCount < newsArticles.length;
 
     return (
         <div className="container mx-auto px-4 pb-4">
@@ -98,13 +134,45 @@ const Newsfeed = () => {
                             </h2>
                             {/* Grid layout for article cards */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {newsArticles.map((article, index) => (
+                                {visibleArticles.map((article, index) => (
                                     <NewsCard
                                         key={`${article.url}-${index}`}
                                         article={article}
                                     />
                                 ))}
                             </div>
+
+                            {/* Loader element for infinite scrolling */}
+                            {hasMoreArticles && (
+                                <div
+                                    ref={loaderRef}
+                                    className="flex justify-center items-center my-8 py-4"
+                                >
+                                    <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-600 rounded-lg">
+                                        <svg
+                                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-600"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <circle
+                                                className="opacity-25"
+                                                cx="12"
+                                                cy="12"
+                                                r="10"
+                                                stroke="currentColor"
+                                                strokeWidth="4"
+                                            ></circle>
+                                            <path
+                                                className="opacity-75"
+                                                fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                            ></path>
+                                        </svg>
+                                        <span>Loading more articles...</span>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     ) : (
                         <div className="text-center py-16 bg-gray-50 rounded-lg border border-gray-200">
