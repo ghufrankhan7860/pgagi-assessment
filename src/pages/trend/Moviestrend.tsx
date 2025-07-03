@@ -1,26 +1,18 @@
 import { useEffect, useState, useRef } from "react";
 import { fetchMovies } from "../../services/moviesApi";
 import MovieCard from "../../components/FeedCards/MovieCard";
-
-interface Movie {
-    id: number;
-    title: string;
-    overview: string;
-    poster_path: string;
-    backdrop_path: string;
-    vote_average: number;
-    release_date: string;
-    genre_ids: number[];
-    popularity: number;
-    [key: string]: any;
-}
+import type { Movie } from "../../types/index";
+import { useDispatch } from "react-redux";
+import { setMovies as setReduxMovies } from "../../store/currSlice";
 
 const Moviestrend = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-    const [displayCount, setDisplayCount] = useState(8); // Start with 8 movies
+    const [displayCount, setDisplayCount] = useState(8);
     const loaderRef = useRef<HTMLDivElement>(null);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const getMovies = async () => {
@@ -30,6 +22,7 @@ const Moviestrend = () => {
                 const moviesArr = response;
 
                 setMovies(moviesArr || []);
+                dispatch(setReduxMovies(moviesArr || [])); // Store movies in Redux
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching trending movies:", error);

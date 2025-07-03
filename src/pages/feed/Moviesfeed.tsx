@@ -1,20 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { fetchMovies } from "../../services/moviesApi";
 import MovieCard from "../../components/FeedCards/MovieCard";
-import { useSelector } from "react-redux";
-
-interface Movie {
-    id: number;
-    title: string;
-    overview: string;
-    poster_path: string;
-    backdrop_path: string;
-    vote_average: number;
-    release_date: string;
-    genre_ids: number[];
-    popularity: number;
-    [key: string]: any;
-}
+import { useSelector, useDispatch } from "react-redux";
+import type { Movie } from "../../types/index";
+import { setMovies as setReduxMovies } from "../../store/currSlice";
 
 const Moviesfeed = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
@@ -27,6 +16,9 @@ const Moviesfeed = () => {
     const selectedGenres = useSelector(
         (store: any) => store.preferences.genres
     );
+
+    // storing curr page data in redux store
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const getMovies = async () => {
@@ -46,6 +38,7 @@ const Moviesfeed = () => {
                 const allMovies = moviesArray.flat();
 
                 setMovies(allMovies);
+                dispatch(setReduxMovies(allMovies));
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching movies:", error);

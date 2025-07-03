@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import SearchContext from "../../../contexts/SearchContext";
 
 const Searchbar = () => {
     const [isFocused, setIsFocused] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
-
+    const { searchQuery, setSearchQuery } = useContext(SearchContext);
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
     };
