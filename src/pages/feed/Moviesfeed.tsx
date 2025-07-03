@@ -1,9 +1,25 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { fetchMovies } from "../../services/moviesApi";
 import MovieCard from "../../components/FeedCards/MovieCard";
 import { useSelector, useDispatch } from "react-redux";
 import type { Movie } from "../../types/index";
 import { setMovies as setReduxMovies } from "../../store/currSlice";
+import searchContext from "../../contexts/SearchContext";
+
+const filterMovies = (
+    allMovies: Movie[],
+    setFavMovies: React.Dispatch<React.SetStateAction<Movie[]>>,
+    searchQuery: string
+) => {
+    if (searchQuery.trim() === "") {
+        setFavMovies(allMovies);
+    } else {
+        const filteredMovies = allMovies.filter((movie: Movie) =>
+            movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFavMovies(filteredMovies);
+    }
+};
 
 const Moviesfeed = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
@@ -16,6 +32,9 @@ const Moviesfeed = () => {
     const selectedGenres = useSelector(
         (store: any) => store.preferences.genres
     );
+
+    const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
+    const { searchQuery } = useContext(searchContext);
 
     // storing curr page data in redux store
     const dispatch = useDispatch();
@@ -38,6 +57,7 @@ const Moviesfeed = () => {
                 const allMovies = moviesArray.flat();
 
                 setMovies(allMovies);
+                setFilteredMovies(allMovies);
                 dispatch(setReduxMovies(allMovies));
                 setLoading(false);
             } catch (error) {
@@ -79,6 +99,9 @@ const Moviesfeed = () => {
         };
     }, [displayCount, loading, movies.length]);
 
+    useEffect(() => {
+        filterMovies(movies, setFilteredMovies, searchQuery);
+    }, [searchQuery]);
     // Error state rendering
     if (loading) {
         return (
@@ -99,7 +122,7 @@ const Moviesfeed = () => {
         );
     }
 
-    const visibleMovies = movies.slice(0, displayCount);
+    const visibleMovies = filteredMovies.slice(0, displayCount);
     const hasMore = displayCount < movies.length;
 
     return (

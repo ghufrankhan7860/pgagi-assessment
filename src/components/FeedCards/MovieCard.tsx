@@ -2,17 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFavMovies } from "../../store/favSlice";
 import type { RootState } from "../../store/store";
-
-interface Movie {
-    id: number;
-    title: string;
-    overview: string;
-    poster_path: string;
-    backdrop_path: string;
-    vote_average: number;
-    release_date: string;
-    popularity: number;
-}
+import type { Movie } from "../../types/index";
 
 interface MovieCardProps {
     movie: Movie;
@@ -39,7 +29,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onFavoriteToggle }) => {
     );
 
     const dispatch = useDispatch();
-
     useEffect(() => {
         const isAlreadyFavorite = selectedFavMovies.some(
             (favMovie: Movie) => favMovie.id === id
