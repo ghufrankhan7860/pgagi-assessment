@@ -101,7 +101,7 @@ const Moviesfeed = () => {
 
     useEffect(() => {
         filterMovies(movies, setFilteredMovies, searchQuery);
-    }, [searchQuery]);
+    }, [searchQuery, movies]);
     // Error state rendering
     if (loading) {
         return (

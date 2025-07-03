@@ -1,9 +1,25 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { fetchMovies } from "../../services/moviesApi";
 import MovieCard from "../../components/FeedCards/MovieCard";
 import type { Movie } from "../../types/index";
 import { useDispatch } from "react-redux";
 import { setMovies as setReduxMovies } from "../../store/currSlice";
+import searchContext from "../../contexts/SearchContext";
+
+const filterMovies = (
+    allMovies: Movie[],
+    setFavMovies: React.Dispatch<React.SetStateAction<Movie[]>>,
+    searchQuery: string
+) => {
+    if (searchQuery.trim() === "") {
+        setFavMovies(allMovies);
+    } else {
+        const filteredMovies = allMovies.filter((movie: Movie) =>
+            movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFavMovies(filteredMovies);
+    }
+};
 
 const Moviestrend = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
@@ -12,8 +28,10 @@ const Moviestrend = () => {
     const [displayCount, setDisplayCount] = useState(8);
     const loaderRef = useRef<HTMLDivElement>(null);
 
-    const dispatch = useDispatch();
+    const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
+    const { searchQuery } = useContext(searchContext);
 
+    const dispatch = useDispatch();
     useEffect(() => {
         const getMovies = async () => {
             try {
@@ -22,6 +40,7 @@ const Moviestrend = () => {
                 const moviesArr = response;
 
                 setMovies(moviesArr || []);
+                setFilteredMovies(moviesArr || []);
                 dispatch(setReduxMovies(moviesArr || [])); // Store movies in Redux
                 setLoading(false);
             } catch (error) {
@@ -63,6 +82,9 @@ const Moviestrend = () => {
         };
     }, [displayCount, loading, movies.length]);
 
+    useEffect(() => {
+        filterMovies(movies, setFilteredMovies, searchQuery);
+    }, [searchQuery, movies]);
     if (loading) {
         return (
             <div className="flex justify-center items-center min-h-screen">
@@ -82,7 +104,7 @@ const Moviestrend = () => {
     }
 
     // Get only the movies we want to display currently
-    const visibleMovies = movies.slice(0, displayCount);
+    const visibleMovies = filteredMovies.slice(0, displayCount);
     const hasMore = displayCount < movies.length;
 
     return (
@@ -91,7 +113,7 @@ const Moviestrend = () => {
                 Trending Movies
             </h1>
 
-            {movies.length === 0 ? (
+            {filterMovies.length === 0 ? (
                 <p className="text-gray-600 text-center">No movies found.</p>
             ) : (
                 <>

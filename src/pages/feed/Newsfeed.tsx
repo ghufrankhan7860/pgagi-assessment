@@ -1,9 +1,27 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import type { NewsArticle } from "../../types";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { fetchNews } from "../../services/newsApi";
 import NewsCard from "../../components/FeedCards/NewsCard";
+import searchContext from "../../contexts/SearchContext";
+
+const filterNews = (
+    allNews: NewsArticle[],
+    setFavNews: React.Dispatch<React.SetStateAction<NewsArticle[]>>,
+    searchQuery: string
+) => {
+    if (searchQuery.trim() === "") {
+        setFavNews(allNews);
+    } else {
+        const filteredNews = allNews.filter(
+            (news: NewsArticle) =>
+                news.title &&
+                news.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFavNews(filteredNews);
+    }
+};
 
 const Newsfeed = () => {
     const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
@@ -14,6 +32,8 @@ const Newsfeed = () => {
     const selectedCategories = useSelector(
         (store: RootState) => store.preferences.categories
     );
+    const [filteredNews, setFilteredNews] = useState<NewsArticle[]>([]);
+    const { searchQuery } = useContext(searchContext);
 
     const getNews = async () => {
         try {
@@ -36,14 +56,12 @@ const Newsfeed = () => {
                 }
             );
 
-            // waiting till all fetch promises resolve
             const articlesArrays = await Promise.all(fetchPromises);
 
-            // Flatten the array of arrays into a single array of articles
             const allArticles = articlesArrays.flat();
 
-            // Set all articles at once to avoid multiple re-renders
             setNewsArticles(allArticles);
+            setFilteredNews(allArticles);
         } catch (error) {
             console.error("Error fetching news articles:", error);
         } finally {
@@ -90,8 +108,12 @@ const Newsfeed = () => {
         };
     }, [displayCount, loading, newsArticles.length]);
 
+    useEffect(() => {
+        filterNews(newsArticles, setFilteredNews, searchQuery);
+    }, [searchQuery]);
+
     // Get only the articles we want to display currently
-    const visibleArticles = newsArticles.slice(0, displayCount);
+    const visibleArticles = filteredNews.slice(0, displayCount);
     const hasMoreArticles = displayCount < newsArticles.length;
 
     return (

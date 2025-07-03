@@ -1,10 +1,26 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import type { NewsArticle } from "../../types";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { fetchNews } from "../../services/newsApi";
 import NewsCard from "../../components/FeedCards/NewsCard";
-
+import searchContext from "../../contexts/SearchContext";
+const filterNews = (
+    allNews: NewsArticle[],
+    setFavNews: React.Dispatch<React.SetStateAction<NewsArticle[]>>,
+    searchQuery: string
+) => {
+    if (searchQuery.trim() === "") {
+        setFavNews(allNews);
+    } else {
+        const filteredNews = allNews.filter(
+            (news: NewsArticle) =>
+                news.title &&
+                news.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFavNews(filteredNews);
+    }
+};
 const Newstrend = () => {
     const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
     const [loading, setLoading] = useState(false);
@@ -14,6 +30,9 @@ const Newstrend = () => {
     const selectedQueries = useSelector(
         (store: RootState) => store.preferences.queries
     );
+
+    const [filteredNews, setFilteredNews] = useState<NewsArticle[]>([]);
+    const { searchQuery } = useContext(searchContext);
 
     const getNews = async () => {
         try {
@@ -30,14 +49,12 @@ const Newstrend = () => {
                 }));
             });
 
-            // waiting till all fetch promises resolve
             const articlesArrays = await Promise.all(fetchPromises);
 
-            // Flatten the array of arrays into a single array of articles
             const allArticles = articlesArrays.flat();
 
-            // Set all articles at once to avoid multiple re-renders
             setNewsArticles(allArticles);
+            setFilteredNews(allArticles);
         } catch (error) {
             console.error("Error fetching news articles:", error);
         } finally {
@@ -45,17 +62,15 @@ const Newstrend = () => {
         }
     };
 
-    // Fetch news when selected queries change
     useEffect(() => {
         if (selectedQueries.length > 0) {
             getNews();
         } else {
             setNewsArticles([]);
-            setDisplayCount(9); // Reset display count when clearing articles
+            setDisplayCount(9);
         }
     }, [selectedQueries]);
 
-    // Set up intersection observer for infinite scrolling
     useEffect(() => {
         if (loading || newsArticles.length === 0) return;
 
@@ -83,9 +98,11 @@ const Newstrend = () => {
             }
         };
     }, [displayCount, loading, newsArticles.length]);
-
+    useEffect(() => {
+        filterNews(newsArticles, setFilteredNews, searchQuery);
+    }, [searchQuery]);
     // Get only the articles we want to display currently
-    const visibleArticles = newsArticles.slice(0, displayCount);
+    const visibleArticles = filteredNews.slice(0, displayCount);
     const hasMoreArticles = displayCount < newsArticles.length;
 
     return (
