@@ -57,7 +57,7 @@ const Moviesfeed = () => {
 
                 setMovies(allMovies);
                 setFilteredMovies(allMovies);
-                dispatch(setReduxMovies(allMovies));
+
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching movies:", error);

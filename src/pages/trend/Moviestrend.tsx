@@ -40,7 +40,6 @@ const Moviestrend = () => {
 
                 setMovies(moviesArr || []);
                 setFilteredMovies(moviesArr || []);
-                dispatch(setReduxMovies(moviesArr || [])); // Store movies in Redux
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching trending movies:", error);
