@@ -3,7 +3,6 @@ import { fetchMovies } from "../../services/moviesApi";
 import MovieCard from "../../components/FeedCards/MovieCard";
 import type { Movie } from "../../types/index";
 import { useDispatch } from "react-redux";
-import { setMovies as setReduxMovies } from "../../store/currSlice";
 import searchContext from "../../contexts/SearchContext";
 
 const filterMovies = (
