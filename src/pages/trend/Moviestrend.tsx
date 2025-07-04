@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useContext } from "react";
 import { fetchMovies } from "../../services/moviesApi";
 import MovieCard from "../../components/FeedCards/MovieCard";
 import type { Movie } from "../../types/index";
-import { useDispatch } from "react-redux";
+
 import searchContext from "../../contexts/SearchContext";
 
 const filterMovies = (
@@ -30,7 +30,6 @@ const Moviestrend = () => {
     const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
     const { searchQuery } = useContext(searchContext);
 
-    const dispatch = useDispatch();
     useEffect(() => {
         const getMovies = async () => {
             try {

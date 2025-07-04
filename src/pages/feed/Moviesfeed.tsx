@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useContext } from "react";
 import { fetchMovies } from "../../services/moviesApi";
 import MovieCard from "../../components/FeedCards/MovieCard";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import type { Movie } from "../../types/index";
 import searchContext from "../../contexts/SearchContext";
 
@@ -34,9 +34,6 @@ const Moviesfeed = () => {
 
     const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
     const { searchQuery } = useContext(searchContext);
-
-    // storing curr page data in redux store
-    const dispatch = useDispatch();
 
     useEffect(() => {
         const getMovies = async () => {
