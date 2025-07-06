@@ -2,8 +2,21 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import MovieCard from "../../components/FeedCards/MovieCard";
 import type { Movie } from "../../types/index";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import SearchContext from "../../contexts/SearchContext";
+
+// Debounce utility function
+const debounce = <T extends (...args: any[]) => any>(
+    func: T,
+    delay: number
+): ((...args: Parameters<T>) => void) => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    return function (...args: Parameters<T>) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func(...args), delay);
+    };
+};
 
 const filterMovies = (
     allMovies: Movie[],
@@ -27,9 +40,24 @@ const Moviesfav = () => {
     const [favMovies, setFavMovies] = useState<Movie[]>(selectedFavMovies);
     const { searchQuery } = useContext(SearchContext);
 
+    // Create debounced filter function
+    const debouncedFilterMovies = useCallback(
+        debounce(
+            (
+                movies: Movie[],
+                setMovies: React.Dispatch<React.SetStateAction<Movie[]>>,
+                query: string
+            ) => {
+                filterMovies(movies, setMovies, query);
+            },
+            300
+        ),
+        []
+    );
+
     useEffect(() => {
-        filterMovies(selectedFavMovies, setFavMovies, searchQuery);
-    }, [searchQuery]);
+        debouncedFilterMovies(selectedFavMovies, setFavMovies, searchQuery);
+    }, [searchQuery, debouncedFilterMovies, selectedFavMovies]);
 
     return (
         <div className="dark:bg-neutral-900 p-4">

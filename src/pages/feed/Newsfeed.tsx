@@ -1,10 +1,23 @@
-import { useEffect, useState, useRef, useContext } from "react";
+import { useEffect, useState, useRef, useContext, useCallback } from "react";
 import type { NewsArticle } from "../../types";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { fetchNews } from "../../services/newsApi";
 import NewsCard from "../../components/FeedCards/NewsCard";
 import searchContext from "../../contexts/SearchContext";
+
+// Debounce utility function
+const debounce = <T extends (...args: any[]) => any>(
+    func: T,
+    delay: number
+): ((...args: Parameters<T>) => void) => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    return function (...args: Parameters<T>) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func(...args), delay);
+    };
+};
 
 const filterNews = (
     allNews: NewsArticle[],
@@ -34,6 +47,21 @@ const Newsfeed = () => {
     );
     const [filteredNews, setFilteredNews] = useState<NewsArticle[]>([]);
     const { searchQuery } = useContext(searchContext);
+
+    // Create debounced filter function
+    const debouncedFilterNews = useCallback(
+        debounce(
+            (
+                news: NewsArticle[],
+                setNews: React.Dispatch<React.SetStateAction<NewsArticle[]>>,
+                query: string
+            ) => {
+                filterNews(news, setNews, query);
+            },
+            300
+        ),
+        []
+    );
 
     const getNews = async () => {
         try {
@@ -109,8 +137,8 @@ const Newsfeed = () => {
     }, [displayCount, loading, newsArticles.length]);
 
     useEffect(() => {
-        filterNews(newsArticles, setFilteredNews, searchQuery);
-    }, [searchQuery]);
+        debouncedFilterNews(newsArticles, setFilteredNews, searchQuery);
+    }, [searchQuery, newsArticles, debouncedFilterNews]);
 
     // Get only the articles we want to display currently
     const visibleArticles = filteredNews.slice(0, displayCount);

@@ -1,9 +1,22 @@
-import { useEffect, useState, useRef, useContext } from "react";
+import { useEffect, useState, useRef, useContext, useCallback } from "react";
 import { fetchMovies } from "../../services/moviesApi";
 import MovieCard from "../../components/FeedCards/MovieCard";
 import { useSelector } from "react-redux";
 import type { Movie } from "../../types/index";
 import searchContext from "../../contexts/SearchContext";
+
+// Debounce utility function
+const debounce = <T extends (...args: any[]) => any>(
+    func: T,
+    delay: number
+): ((...args: Parameters<T>) => void) => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    return function (...args: Parameters<T>) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func(...args), delay);
+    };
+};
 
 const filterMovies = (
     allMovies: Movie[],
@@ -34,6 +47,23 @@ const Moviesfeed = () => {
 
     const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
     const { searchQuery } = useContext(searchContext);
+
+    // Create debounced filter function
+    const debouncedFilterMovies = useCallback(
+        debounce(
+            (
+                movies: Movie[],
+                setFilteredMovies: React.Dispatch<
+                    React.SetStateAction<Movie[]>
+                >,
+                query: string
+            ) => {
+                filterMovies(movies, setFilteredMovies, query);
+            },
+            300
+        ),
+        []
+    );
 
     useEffect(() => {
         const getMovies = async () => {
@@ -96,8 +126,8 @@ const Moviesfeed = () => {
     }, [displayCount, loading, movies.length]);
 
     useEffect(() => {
-        filterMovies(movies, setFilteredMovies, searchQuery);
-    }, [searchQuery, movies]);
+        debouncedFilterMovies(movies, setFilteredMovies, searchQuery);
+    }, [searchQuery, movies, debouncedFilterMovies]);
 
     // Error state rendering
     if (loading) {

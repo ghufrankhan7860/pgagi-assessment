@@ -2,8 +2,21 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import NewsCard from "../../components/FeedCards/NewsCard";
 import type { NewsArticle } from "../../types";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import SearchContext from "../../contexts/SearchContext";
+
+// Debounce utility function
+const debounce = <T extends (...args: any[]) => any>(
+    func: T,
+    delay: number
+): ((...args: Parameters<T>) => void) => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    return function (...args: Parameters<T>) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func(...args), delay);
+    };
+};
 
 const filterNews = (
     allNews: NewsArticle[],
@@ -30,9 +43,24 @@ const NewsFav = () => {
     const [favNews, setFavNews] = useState<NewsArticle[]>(selectedFavNews);
     const { searchQuery } = useContext(SearchContext);
 
+    // Create debounced filter function
+    const debouncedFilterNews = useCallback(
+        debounce(
+            (
+                news: NewsArticle[],
+                setNews: React.Dispatch<React.SetStateAction<NewsArticle[]>>,
+                query: string
+            ) => {
+                filterNews(news, setNews, query);
+            },
+            300
+        ),
+        []
+    );
+
     useEffect(() => {
-        filterNews(selectedFavNews, setFavNews, searchQuery);
-    }, [searchQuery]);
+        debouncedFilterNews(selectedFavNews, setFavNews, searchQuery);
+    }, [searchQuery, debouncedFilterNews, selectedFavNews]);
 
     return (
         <div className="dark:bg-neutral-900 p-4">
