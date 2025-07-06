@@ -15,12 +15,12 @@ const Dashboard = () => {
     return (
         <div className="flex h-screen overflow-hidden dark:bg-neutral-900">
             {/* Sidebar - fixed position */}
-            <div className="fixed top-0 left-0 h-full z-10">
+            <div className="fixed top-0 left-0 h-full z-10 dark:bg-neutral-900">
                 <Sidebar onToggleCollapse={handleSidebarToggle} />
             </div>
 
             <div
-                className=" flex flex-col flex-grow transition-all duration-300 w-full"
+                className="flex flex-col flex-grow transition-all duration-300 w-full"
                 style={{
                     marginLeft: isSidebarCollapsed ? "5rem" : "16rem",
                     width: `calc(100% - ${
@@ -30,17 +30,17 @@ const Dashboard = () => {
             >
                 <Header />
                 {currPath === "/" ? (
-                    <div className="flex flex-col justify-center items-center h-screen overflow-y-auto p-20 bg-gray-50 ">
-                        <div className="max-w-2xl w-full mt-20 bg-white rounded-lg shadow-md p-8 text-center">
-                            <h1 className="text-3xl font-bold text-blue-600 mb-6">
+                    <div className="flex flex-col justify-center items-center h-screen overflow-y-auto p-20 bg-gray-50 dark:bg-neutral-900">
+                        <div className="max-w-2xl w-full mt-20 bg-white dark:bg-neutral-800 rounded-lg shadow-md dark:shadow-neutral-700/20 p-8 text-center">
+                            <h1 className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-6">
                                 Welcome to Your Personal Dashboard
                             </h1>
 
                             <div className="space-y-6 text-left">
-                                <div className="border-b pb-4">
-                                    <h2 className="text-xl font-semibold text-gray-800 mb-2 flex items-center">
+                                <div className="border-b dark:border-neutral-700 pb-4">
+                                    <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2 flex items-center">
                                         <svg
-                                            className="w-5 h-5 mr-2 text-blue-500"
+                                            className="w-5 h-5 mr-2 text-blue-500 dark:text-blue-400"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -54,18 +54,18 @@ const Dashboard = () => {
                                         </svg>
                                         Getting Started
                                     </h2>
-                                    <p className="text-gray-600">
+                                    <p className="text-gray-600 dark:text-gray-300">
                                         This dashboard allows you to browse news
                                         articles and movies, and save your
                                         favorites for later viewing.
                                     </p>
                                 </div>
 
-                                <div className="border-b pb-4">
-                                    <h2 className="text-xl font-semibold text-gray-800 mb-2 flex items-center">
+                                <div className="border-b dark:border-neutral-700 pb-4">
+                                    <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2 flex items-center">
                                         Feed
                                     </h2>
-                                    <p className="text-gray-600">
+                                    <p className="text-gray-600 dark:text-gray-300">
                                         Click on <strong>Feed</strong> in the
                                         sidebar to browse the latest news
                                         articles and Movies based on the user
@@ -80,11 +80,11 @@ const Dashboard = () => {
                                     </p>
                                 </div>
 
-                                <div className="border-b pb-4">
-                                    <h2 className="text-xl font-semibold text-gray-800 mb-2 flex items-center">
+                                <div className="border-b dark:border-neutral-700 pb-4">
+                                    <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2 flex items-center">
                                         Trending
                                     </h2>
-                                    <p className="text-gray-600">
+                                    <p className="text-gray-600 dark:text-gray-300">
                                         Browse Trending movies in the{" "}
                                         <strong>Movies</strong> section. Add
                                         movies to your favorites by clicking the
@@ -96,11 +96,11 @@ const Dashboard = () => {
                                     </p>
                                 </div>
 
-                                <div className="border-b pb-4">
-                                    <h2 className="text-xl font-semibold text-gray-800 mb-2 flex items-center">
+                                <div className="border-b dark:border-neutral-700 pb-4">
+                                    <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2 flex items-center">
                                         Favorites
                                     </h2>
-                                    <p className="text-gray-600">
+                                    <p className="text-gray-600 dark:text-gray-300">
                                         View all your favorite news articles and
                                         movies in the <strong>Favorites</strong>{" "}
                                         section.
@@ -108,9 +108,9 @@ const Dashboard = () => {
                                 </div>
 
                                 <div>
-                                    <h2 className="text-xl font-semibold text-gray-800 mb-2 flex items-center">
+                                    <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2 flex items-center">
                                         <svg
-                                            className="w-5 h-5 mr-2 text-blue-500"
+                                            className="w-5 h-5 mr-2 text-blue-500 dark:text-blue-400"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -130,7 +130,7 @@ const Dashboard = () => {
                                         </svg>
                                         Personalize Your Feed
                                     </h2>
-                                    <p className="text-gray-600">
+                                    <p className="text-gray-600 dark:text-gray-300">
                                         Click the <strong>settings icon</strong>{" "}
                                         in the top right corner to customize
                                         your news categories and preferences.
@@ -139,14 +139,14 @@ const Dashboard = () => {
                             </div>
 
                             <div className="mt-8">
-                                <button className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                                <button className="px-6 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white rounded-md transition-colors">
                                     Explore Now
                                 </button>
                             </div>
                         </div>
                     </div>
                 ) : (
-                    <main className="flex-grow p-6 bg-gray-50 overflow-y-auto w-full">
+                    <main className="flex-grow p-6 bg-gray-50 dark:bg-neutral-900 overflow-y-auto w-full">
                         <Outlet />
                     </main>
                 )}
