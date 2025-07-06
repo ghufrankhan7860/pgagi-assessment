@@ -69,7 +69,7 @@ const sidebarItems = [
 ];
 
 const Sidebar = ({ onToggleCollapse }: SidebarProps) => {
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(true);
 
     const toggleSidebar = () => {
         const newCollapsedState = !isCollapsed;
