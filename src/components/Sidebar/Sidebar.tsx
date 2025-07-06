@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 interface SidebarProps {
@@ -75,12 +75,15 @@ const Sidebar = ({ onToggleCollapse }: SidebarProps) => {
         const newCollapsedState = !isCollapsed;
         setIsCollapsed(newCollapsedState);
 
-        // Notify parent component
         if (onToggleCollapse) {
             onToggleCollapse(newCollapsedState);
         }
     };
-
+    useEffect(() => {
+        if (onToggleCollapse) {
+            onToggleCollapse(isCollapsed);
+        }
+    }, []);
     return (
         <div
             className={`sticky h-screen bg-white transition-all duration-300 border-r border-gray-200 dark:border-neutral-600 ${
