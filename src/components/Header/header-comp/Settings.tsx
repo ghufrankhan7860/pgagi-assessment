@@ -62,7 +62,7 @@ const NewsSettings = () => {
             {/* Toggle button */}
             <button
                 onClick={togglePanel}
-                className="flex items-center gap-2 px-3 py-2 bg-gray-100 text-gray-700 rounded-md shadow-sm hover:bg-gray-200 transition-colors border border-gray-300"
+                className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-neutral-900 text-gray-700 dark:text-gray-200 rounded-md shadow-sm hover:bg-gray-200 dark:hover:bg-neutral-700 transition-colors border border-gray-300 dark:border-neutral-600"
                 aria-expanded={isPanelOpen}
                 aria-controls="settings-panel"
             >
@@ -82,7 +82,7 @@ const NewsSettings = () => {
                     <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
                     <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.902 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
                 </svg>
-                <span className="relative ml-1 bg-gray-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium">
+                <span className="relative ml-1 bg-gray-700 dark:bg-neutral-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium">
                     {selectedCategories.length + selectedQueries.length}
                 </span>
             </button>
@@ -90,7 +90,7 @@ const NewsSettings = () => {
             {/* Collapsible panel */}
             <div
                 id="settings-panel"
-                className={`absolute top-full right-0 mt-2 w-70 transition-all duration-300 origin-top transform bg-white rounded-lg shadow-xl border border-gray-200 z-10 overflow-hidden ${
+                className={`absolute top-full right-0 mt-2 w-70 transition-all duration-300 origin-top transform bg-white dark:bg-neutral-900 rounded-lg shadow-xl border border-gray-200 dark:border-neutral-700 z-10 overflow-hidden ${
                     isPanelOpen
                         ? "opacity-100 scale-y-100"
                         : "opacity-0 scale-y-0 pointer-events-none"
@@ -98,11 +98,11 @@ const NewsSettings = () => {
             >
                 {/* Category Panel */}
                 <div className="px-6 pt-6">
-                    <h2 className="text-lg font-bold text-gray-600 mb-4 flex items-center justify-between">
+                    <h2 className="text-lg font-bold text-gray-600 dark:text-gray-300 mb-4 flex items-center justify-between">
                         <span>Category Settings</span>
                         <button
                             onClick={togglePanel}
-                            className="text-gray-500 hover:text-gray-700"
+                            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                             aria-label="Close panel"
                         >
                             ×
@@ -112,18 +112,18 @@ const NewsSettings = () => {
                     {/* Selected categories list */}
                     <div className="flex flex-col mb-6">
                         {selectedCategories.length ? (
-                            <div className="flex flex-wrap flex-grow border-2 max-h-60 overflow-auto border-gray-200 rounded-lg p-4 bg-gray-50">
-                                <p className="w-full text-gray-500 text-xs mb-2">
+                            <div className="flex flex-wrap flex-grow border-2 max-h-60 overflow-auto border-gray-200 dark:border-neutral-700 rounded-lg p-4 bg-gray-50 dark:bg-neutral-900">
+                                <p className="w-full text-gray-500 dark:text-gray-400 text-xs mb-2">
                                     Opted categories:
                                 </p>
                                 {selectedCategories.map((category) => (
                                     <div
                                         key={category}
-                                        className="bg-blue-100 text-xs border border-blue-200 text-blue-800 w-fit px-3 py-1 m-1 rounded-full flex items-center shadow-sm transition-all hover:shadow-md"
+                                        className="bg-blue-100 dark:bg-blue-900 text-xs border border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200 w-fit px-3 py-1 m-1 rounded-full flex items-center shadow-sm transition-all hover:shadow-md"
                                     >
                                         <span className="mr-2">{category}</span>
                                         <button
-                                            className="bg-blue-200 hover:bg-red-400 text-blue-800 hover:text-white rounded-full w-5 h-5 flex items-center justify-center transition-colors"
+                                            className="bg-blue-200 dark:bg-blue-800 hover:bg-red-400 dark:hover:bg-red-700 text-blue-800 dark:text-blue-200 hover:text-white dark:hover:text-white rounded-full w-5 h-5 flex items-center justify-center transition-colors"
                                             onClick={() =>
                                                 handleRemoveCategory(category)
                                             }
@@ -135,7 +135,7 @@ const NewsSettings = () => {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-gray-500 text-sm italic p-4 border-2 border-dashed border-gray-200 rounded-lg text-center">
+                            <p className="text-gray-500 dark:text-gray-400 text-sm italic p-4 border-2 border-dashed border-gray-200 dark:border-neutral-700 rounded-lg text-center">
                                 No categories selected
                             </p>
                         )}
@@ -145,13 +145,13 @@ const NewsSettings = () => {
                     <div className="mb-4">
                         <label
                             htmlFor="category-select"
-                            className="block text-sm font-medium text-gray-600 mb-2 text-xs"
+                            className="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-2 text-xs"
                         >
                             Add Category
                         </label>
                         <select
                             id="category-select"
-                            className="w-full text-sm py-2 px-3 border-2 border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full text-sm py-2 px-3 border-2 border-gray-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 dark:text-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                             value={currSelected}
                             onChange={(e) => {
                                 setCurrSelected(e.target.value);
@@ -159,7 +159,7 @@ const NewsSettings = () => {
                             }}
                         >
                             <option
-                                className="text-sm text-gray-600"
+                                className="text-sm text-gray-600 dark:text-gray-300"
                                 value=""
                                 disabled
                             >
@@ -167,7 +167,7 @@ const NewsSettings = () => {
                             </option>
                             {availableCategories.map((category) => (
                                 <option
-                                    className="text-sm text-gray-600"
+                                    className="text-sm text-gray-600 dark:text-gray-300"
                                     key={category}
                                     value={category}
                                 >
@@ -180,25 +180,25 @@ const NewsSettings = () => {
 
                 {/* Queries section */}
                 <div className="px-6 pb-6">
-                    <h2 className="text-lg font-bold text-gray-600 mb-4 flex items-center justify-between">
+                    <h2 className="text-lg font-bold text-gray-600 dark:text-gray-300 mb-4 flex items-center justify-between">
                         <span>Queries</span>
                     </h2>
 
                     {/* // Selected queries list */}
                     <div className="flex flex-col mb-6">
                         {selectedQueries.length ? (
-                            <div className="flex flex-wrap border-2 border-gray-200 max-h-50 overflow-auto rounded-lg p-4 bg-gray-50">
-                                <p className="w-full text-gray-500 text-xs mb-2">
+                            <div className="flex flex-wrap border-2 border-gray-200 dark:border-neutral-700 max-h-50 overflow-auto rounded-lg p-4 bg-gray-50 dark:bg-neutral-900">
+                                <p className="w-full text-gray-500 dark:text-gray-400 text-xs mb-2">
                                     Queries:
                                 </p>
                                 {selectedQueries.map((query) => (
                                     <div
                                         key={query}
-                                        className="bg-blue-100 text-xs border border-blue-200 text-blue-800 w-fit px-3 py-1 m-1 rounded-full flex items-center shadow-sm transition-all hover:shadow-md"
+                                        className="bg-blue-100 dark:bg-blue-900 text-xs border border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200 w-fit px-3 py-1 m-1 rounded-full flex items-center shadow-sm transition-all hover:shadow-md"
                                     >
                                         <span className="mr-2">{query}</span>
                                         <button
-                                            className="bg-blue-200 hover:bg-red-400 text-blue-800 hover:text-white rounded-full w-5 h-5 flex items-center justify-center transition-colors"
+                                            className="bg-blue-200 dark:bg-blue-800 hover:bg-red-400 dark:hover:bg-red-700 text-blue-800 dark:text-blue-200 hover:text-white dark:hover:text-white rounded-full w-5 h-5 flex items-center justify-center transition-colors"
                                             onClick={() =>
                                                 handleRemoveQueries(query)
                                             }
@@ -210,7 +210,7 @@ const NewsSettings = () => {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-gray-500 text-sm italic p-2 border-2 border-dashed border-gray-200 rounded-lg text-center">
+                            <p className="text-gray-500 dark:text-gray-400 text-sm italic p-2 border-2 border-dashed border-gray-200 dark:border-neutral-700 rounded-lg text-center">
                                 No Queries selected
                             </p>
                         )}
@@ -218,7 +218,7 @@ const NewsSettings = () => {
                     <input
                         type="text"
                         value={currQuery}
-                        className="w-full text-sm py-2 px-3 border-2 border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full text-sm py-2 px-3 border-2 border-gray-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 dark:text-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Search Query..."
                         onChange={(e) => {
                             setCurrQuery(e.target.value);
@@ -238,7 +238,7 @@ const NewsSettings = () => {
 const MoviesSettings = () => {
     const [currSelected, setCurrSelected] = useState<string>("");
     const [isPanelOpen, setIsPanelOpen] = useState(false);
-    // const [currmQuery, setCurrmQuery] = useState("");
+
     const dispatch = useDispatch();
     const availableMovieGenre = availableMovieGenres.map((genre) => genre.name);
     const selectedGenres = useSelector(
@@ -256,23 +256,11 @@ const MoviesSettings = () => {
         }
         setCurrSelected("");
     };
-    // const handleSelectmQueries = (mQuery: string) => {
-    //     if (selectedmQueries.includes(mQuery) === false) {
-    //         const newQueries = [...selectedmQueries, mQuery];
-    //         dispatch(setmQueries(newQueries));
-    //     }
-    //     setCurrmQuery("");
-    // };
 
     const handleRemoveGenre = (genre: string) => {
         const newGenres = selectedGenres.filter((cat) => cat !== genre);
         dispatch(setGenres(newGenres));
     };
-
-    // const handleRemovemQueries = (mQuery: string) => {
-    //     const newQueries = selectedmQueries.filter((que) => que !== mQuery);
-    //     dispatch(setmQueries(newQueries));
-    // };
 
     const togglePanel = () => {
         setIsPanelOpen(!isPanelOpen);
@@ -283,7 +271,7 @@ const MoviesSettings = () => {
             {/* Toggle button */}
             <button
                 onClick={togglePanel}
-                className="flex items-center gap-2 px-3 py-2 bg-gray-100 text-gray-700 rounded-md shadow-sm hover:bg-gray-200 transition-colors border border-gray-300"
+                className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-neutral-900 text-gray-700 dark:text-gray-200 rounded-md shadow-sm hover:bg-gray-200 dark:hover:bg-neutral-700 transition-colors border border-gray-300 dark:border-neutral-600"
                 aria-expanded={isPanelOpen}
                 aria-controls="settings-panel"
             >
@@ -303,7 +291,7 @@ const MoviesSettings = () => {
                     <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
                     <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.902 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
                 </svg>
-                <span className="relative ml-1 bg-gray-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium">
+                <span className="relative ml-1 bg-gray-700 dark:bg-neutral-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium">
                     {selectedGenres.length + selectedmQueries.length}
                 </span>
             </button>
@@ -311,7 +299,7 @@ const MoviesSettings = () => {
             {/* Collapsible panel */}
             <div
                 id="settings-panel"
-                className={`absolute top-full right-0 mt-2 w-70 transition-all duration-300 origin-top transform bg-white rounded-lg shadow-xl border border-gray-200 z-10 overflow-hidden ${
+                className={`absolute top-full right-0 mt-2 w-70 transition-all duration-300 origin-top transform bg-white dark:bg-neutral-900 rounded-lg shadow-xl border border-gray-200 dark:border-neutral-700 z-10 overflow-hidden ${
                     isPanelOpen
                         ? "opacity-100 scale-y-100"
                         : "opacity-0 scale-y-0 pointer-events-none"
@@ -319,11 +307,11 @@ const MoviesSettings = () => {
             >
                 {/* Genres Panel */}
                 <div className="px-6 pt-6">
-                    <h2 className="text-lg font-bold text-gray-600 mb-4 flex items-center justify-between">
+                    <h2 className="text-lg font-bold text-gray-600 dark:text-gray-300 mb-4 flex items-center justify-between">
                         <span>Movie Generes</span>
                         <button
                             onClick={togglePanel}
-                            className="text-gray-500 hover:text-gray-700"
+                            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                             aria-label="Close panel"
                         >
                             ×
@@ -333,18 +321,18 @@ const MoviesSettings = () => {
                     {/* Selected categories list */}
                     <div className="flex flex-col mb-6">
                         {selectedGenres.length ? (
-                            <div className="flex flex-wrap flex-grow border-2 max-h-60 overflow-auto border-gray-200 rounded-lg p-4 bg-gray-50">
-                                <p className="w-full text-gray-500 text-xs mb-2">
+                            <div className="flex flex-wrap flex-grow border-2 max-h-60 overflow-auto border-gray-200 dark:border-neutral-700 rounded-lg p-4 bg-gray-50 dark:bg-neutral-900">
+                                <p className="w-full text-gray-500 dark:text-gray-400 text-xs mb-2">
                                     Selected Genres:
                                 </p>
                                 {selectedGenres.map((category) => (
                                     <div
                                         key={category}
-                                        className="bg-blue-100 text-xs border border-blue-200 text-blue-800 w-fit px-3 py-1 m-1 rounded-full flex items-center shadow-sm transition-all hover:shadow-md"
+                                        className="bg-blue-100 dark:bg-blue-900 text-xs border border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200 w-fit px-3 py-1 m-1 rounded-full flex items-center shadow-sm transition-all hover:shadow-md"
                                     >
                                         <span className="mr-2">{category}</span>
                                         <button
-                                            className="bg-blue-200 hover:bg-red-400 text-blue-800 hover:text-white rounded-full w-5 h-5 flex items-center justify-center transition-colors"
+                                            className="bg-blue-200 dark:bg-blue-800 hover:bg-red-400 dark:hover:bg-red-700 text-blue-800 dark:text-blue-200 hover:text-white dark:hover:text-white rounded-full w-5 h-5 flex items-center justify-center transition-colors"
                                             onClick={() =>
                                                 handleRemoveGenre(category)
                                             }
@@ -356,7 +344,7 @@ const MoviesSettings = () => {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-gray-500 text-sm italic p-4 border-2 border-dashed border-gray-200 rounded-lg text-center">
+                            <p className="text-gray-500 dark:text-gray-400 text-sm italic p-4 border-2 border-dashed border-gray-200 dark:border-neutral-700 rounded-lg text-center">
                                 No Genre selected
                             </p>
                         )}
@@ -366,13 +354,13 @@ const MoviesSettings = () => {
                     <div className="mb-4">
                         <label
                             htmlFor="category-select"
-                            className="block text-sm font-medium text-gray-600 mb-2 text-xs"
+                            className="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-2 text-xs"
                         >
                             Add Genre
                         </label>
                         <select
                             id="category-select"
-                            className="w-full text-sm py-2 px-3 border-2 border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full text-sm py-2 px-3 border-2 border-gray-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 dark:text-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                             value={currSelected}
                             onChange={(e) => {
                                 setCurrSelected(e.target.value);
@@ -380,7 +368,7 @@ const MoviesSettings = () => {
                             }}
                         >
                             <option
-                                className="text-sm text-gray-600"
+                                className="text-sm text-gray-600 dark:text-gray-300"
                                 value=""
                                 disabled
                             >
@@ -388,7 +376,7 @@ const MoviesSettings = () => {
                             </option>
                             {availableMovieGenre.map((genre) => (
                                 <option
-                                    className="text-sm text-gray-600"
+                                    className="text-sm text-gray-600 dark:text-gray-300"
                                     key={genre}
                                     value={genre}
                                 >
