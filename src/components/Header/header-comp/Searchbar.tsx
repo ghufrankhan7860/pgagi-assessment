@@ -15,10 +15,10 @@ const Searchbar = () => {
     return (
         <div className="w-full max-w-md">
             <div
-                className={`flex items-center bg-white border ${
+                className={`flex items-center bg-white dark:bg-neutral-800 border ${
                     isFocused
-                        ? "border-blue-400 ring-2 ring-blue-50"
-                        : "border-gray-200 hover:border-gray-300"
+                        ? "border-blue-400 ring-1 ring-blue-50"
+                        : "border-gray-200 dark:border-neutral-600 hover:border-gray-300 dark:hover:border-neutral-900"
                 } rounded-xl transition-all duration-200 py-2 px-3`}
             >
                 {/* Search Icon */}
@@ -47,7 +47,7 @@ const Searchbar = () => {
                     onChange={handleInputChange}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
-                    className="flex-grow outline-none border-none bg-transparent ml-2 text-sm placeholder-gray-400 text-gray-700"
+                    className="flex-grow outline-none border-none bg-transparent ml-2 text-sm placeholder-gray-500 text-gray-700 dark:text-gray-100"
                 />
 
                 {/* Clear Button (only appears when there's text) */}

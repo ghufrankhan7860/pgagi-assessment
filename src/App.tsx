@@ -9,7 +9,7 @@ const App = () => {
             <SearchProvider>
                 <Provider store={store}>
                     <div
-                        className="p-2 "
+                        className="p-2 dark:bg-neutral-900 "
                         style={{
                             msOverflowStyle: "none", // IE and Edge
                             scrollbarWidth: "none", // Firefox

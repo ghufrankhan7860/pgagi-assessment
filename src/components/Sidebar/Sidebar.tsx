@@ -83,12 +83,12 @@ const Sidebar = ({ onToggleCollapse }: SidebarProps) => {
 
     return (
         <div
-            className={`sticky h-screen bg-white transition-all duration-300 border-r border-gray-200 ${
+            className={`sticky h-screen bg-white transition-all duration-300 border-r border-gray-200 dark:border-neutral-600 ${
                 isCollapsed ? "w-20" : "w-64"
             } flex flex-col p-0 m-0 dark:bg-neutral-900 `}
         >
             {/* Header with hamburger button */}
-            <div className="border-b border-gray-100 p-3 dark:bg-neutral-900">
+            <div className="border-b border-gray-100 dark:border-neutral-600 p-3 dark:bg-neutral-900">
                 <button
                     onClick={toggleSidebar}
                     className={`p-2 rounded-xl border border-gray-200 hover:bg-gray-50 w-full flex justify-center dark:hover:bg-neutral-700 ${
@@ -128,7 +128,11 @@ const Sidebar = ({ onToggleCollapse }: SidebarProps) => {
                                 isActive
                                     ? "bg-blue-50 text-blue-600 dark:bg-neutral-800"
                                     : "text-gray-600 hover:bg-gray-50 dark:hover:bg-neutral-800"
-                            } ${isCollapsed ? "" : "border border-gray-200"}`
+                            } ${
+                                isCollapsed
+                                    ? ""
+                                    : "border border-gray-200 dark:border-neutral-600"
+                            }`
                         }
                     >
                         <span className="flex-shrink-0">{item.icon}</span>
@@ -144,7 +148,7 @@ const Sidebar = ({ onToggleCollapse }: SidebarProps) => {
 
             {/* Bottom area for future expansion (profile, logout, etc) */}
             {!isCollapsed && (
-                <div className="border-t border-gray-100 p-3">
+                <div className="border-t  dark:border-neutral-600 p-3">
                     <div className="flex items-center p-2">
                         <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
                             U

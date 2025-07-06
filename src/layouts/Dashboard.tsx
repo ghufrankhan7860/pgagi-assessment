@@ -13,7 +13,7 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="flex h-screen overflow-hidden">
+        <div className="flex h-screen overflow-hidden dark:bg-neutral-900">
             {/* Sidebar - fixed position */}
             <div className="fixed top-0 left-0 h-full z-10">
                 <Sidebar onToggleCollapse={handleSidebarToggle} />

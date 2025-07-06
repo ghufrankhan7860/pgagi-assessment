@@ -5,9 +5,9 @@ import ThemeToggle from "./header-comp/ToggleTheme";
 
 const Header = () => {
     return (
-        <div className="sticky top-0 z-20 bg-white shadow-sm w-full">
+        <div className="sticky top-0 z-20 bg-white shadow-sm w-full dark:bg-neutral-900">
             {/* Top header with search, theme toggle and settings */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-100 w-full">
+            <div className="flex items-center justify-between p-4 border-b-1 border-gray-100 dark:border-neutral-600 w-full">
                 <div className="flex-grow max-w-2xl">
                     <Searchbar />
                 </div>
