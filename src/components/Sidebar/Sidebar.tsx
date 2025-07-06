@@ -85,20 +85,22 @@ const Sidebar = ({ onToggleCollapse }: SidebarProps) => {
         <div
             className={`sticky h-screen bg-white transition-all duration-300 border-r border-gray-200 ${
                 isCollapsed ? "w-20" : "w-64"
-            } flex flex-col p-0 m-0`}
+            } flex flex-col p-0 m-0 dark:bg-neutral-900 `}
         >
             {/* Header with hamburger button */}
-            <div className="border-b border-gray-100 p-3">
+            <div className="border-b border-gray-100 p-3 dark:bg-neutral-900">
                 <button
                     onClick={toggleSidebar}
-                    className="p-2 rounded-xl border border-gray-200 hover:bg-gray-50 w-full flex justify-center"
+                    className={`p-2 rounded-xl border border-gray-200 hover:bg-gray-50 w-full flex justify-center dark:hover:bg-neutral-700 ${
+                        isCollapsed ? " text-blue-500" : ""
+                    }`}
                     aria-label={
                         isCollapsed ? "Expand sidebar" : "Collapse sidebar"
                     }
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-gray-500"
+                        className="h-6 w-6 text-gray-500 dark:text-white"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -124,15 +126,15 @@ const Sidebar = ({ onToggleCollapse }: SidebarProps) => {
                                 isCollapsed ? "justify-center" : "px-4"
                             } py-3 rounded-xl transition-colors ${
                                 isActive
-                                    ? "bg-blue-50 text-blue-600"
-                                    : "text-gray-600 hover:bg-gray-50"
+                                    ? "bg-blue-50 text-blue-600 dark:bg-neutral-800"
+                                    : "text-gray-600 hover:bg-gray-50 dark:hover:bg-neutral-800"
                             } ${isCollapsed ? "" : "border border-gray-200"}`
                         }
                     >
                         <span className="flex-shrink-0">{item.icon}</span>
 
                         {!isCollapsed && (
-                            <span className="ml-3 font-medium text-sm">
+                            <span className="ml-3 font-medium text-sm dark:text-white">
                                 {item.title}
                             </span>
                         )}

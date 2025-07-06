@@ -1,23 +1,15 @@
-import { useState } from "react";
+import { useContext } from "react";
+import ThemeContext from "../../../contexts/ThemeContext";
 
 const ThemeToggle = () => {
-    const [currTheme, setCurrTheme] = useState<string>("light");
-
-    const toggleTheme = () => {
-        const newTheme = currTheme === "light" ? "dark" : "light";
-        setCurrTheme(newTheme);
-        document.documentElement.classList.toggle("dark");
-    };
+    const { theme, toggleTheme } = useContext(ThemeContext);
 
     return (
         <button
-            className="p-2 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-600 flex items-center justify-center"
-            aria-label={`Switch to ${
-                currTheme === "light" ? "dark" : "light"
-            } mode`}
+            className="p-2 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-600 flex items-center justify-center dark:text-black "
             onClick={toggleTheme}
         >
-            {currTheme === "light" ? (
+            {theme === "light" ? (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5 text-indigo-900"
