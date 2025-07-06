@@ -56,9 +56,9 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, onFavoriteToggle }) => {
     };
 
     return (
-        <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full border border-gray-200">
+        <div className="bg-white dark:bg-neutral-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full border border-gray-200 dark:border-gray-700">
             {/* Image container with consistent aspect ratio */}
-            <div className="relative pt-[56.25%] bg-gray-200 overflow-hidden">
+            <div className="relative pt-[56.25%] bg-gray-200 dark:bg-gray-700 overflow-hidden">
                 {imageUrl && !imageError ? (
                     <img
                         src={imageUrl}
@@ -67,8 +67,8 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, onFavoriteToggle }) => {
                         onError={() => setImageError(true)}
                     />
                 ) : (
-                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-gray-100">
-                        <span className="text-gray-400">
+                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+                        <span className="text-gray-400 dark:text-gray-500">
                             No image available
                         </span>
                     </div>
@@ -76,7 +76,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, onFavoriteToggle }) => {
 
                 {/* Heart button for favorites - positioned in top left */}
                 <button
-                    className="absolute top-2 left-2 p-1.5 bg-white bg-opacity-80 rounded-full hover:bg-opacity-100 transition-all duration-200 shadow-sm z-10"
+                    className="absolute top-2 left-2 p-1.5 bg-white dark:bg-gray-800 bg-opacity-80 dark:bg-opacity-80 rounded-full hover:bg-opacity-100 dark:hover:bg-opacity-100 transition-all duration-200 shadow-sm z-10"
                     onClick={handleFavoriteToggle}
                     aria-label={
                         isFavorite
@@ -88,7 +88,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, onFavoriteToggle }) => {
                         className={`w-5 h-5 ${
                             isFavorite
                                 ? "text-red-500 fill-current"
-                                : "text-gray-400 hover:text-red-500"
+                                : "text-gray-400 hover:text-red-500 dark:text-gray-300 dark:hover:text-red-500"
                         }`}
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -105,7 +105,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, onFavoriteToggle }) => {
 
                 {/* Category badge */}
                 {category && (
-                    <span className="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full capitalize">
+                    <span className="absolute top-2 right-2 bg-blue-600 dark:bg-blue-700 text-white text-xs font-bold px-2 py-1 rounded-full capitalize">
                         {category}
                     </span>
                 )}
@@ -113,7 +113,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, onFavoriteToggle }) => {
 
             <div className="p-4 flex flex-col flex-grow">
                 {/* Article title with truncation */}
-                <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2 hover:text-blue-600">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2 line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400">
                     <a
                         href={url}
                         target="_blank"
@@ -125,7 +125,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, onFavoriteToggle }) => {
                 </h3>
 
                 {/* Description with truncation */}
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">
                     {description || "No description available"}
                 </p>
 
@@ -135,7 +135,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, onFavoriteToggle }) => {
                         href={url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+                        className="inline-flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
                     >
                         Read full article
                         <svg

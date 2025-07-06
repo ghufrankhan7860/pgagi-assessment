@@ -73,9 +73,9 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onFavoriteToggle }) => {
     };
 
     return (
-        <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full border border-gray-200">
+        <div className="bg-white dark:bg-neutral-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full border border-gray-200 dark:border-gray-700">
             {/* Image container with consistent aspect ratio */}
-            <div className="relative pt-[150%] bg-gray-200 overflow-hidden">
+            <div className="relative pt-[150%] bg-gray-200 dark:bg-gray-700 overflow-hidden">
                 {imageUrl && !imageError ? (
                     <img
                         src={imageUrl}
@@ -84,8 +84,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onFavoriteToggle }) => {
                         onError={() => setImageError(true)}
                     />
                 ) : (
-                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-gray-100">
-                        <span className="text-gray-400">
+                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+                        <span className="text-gray-400 dark:text-gray-500">
                             No image available
                         </span>
                     </div>
@@ -93,7 +93,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onFavoriteToggle }) => {
 
                 {/* Heart button for favorites - positioned in top left */}
                 <button
-                    className="absolute top-2 left-2 p-1.5 bg-white bg-opacity-80 rounded-full hover:bg-opacity-100 transition-all duration-200 shadow-sm z-10"
+                    className="absolute top-2 left-2 p-1.5 bg-white dark:bg-gray-800 bg-opacity-80 dark:bg-opacity-80 rounded-full hover:bg-opacity-100 dark:hover:bg-opacity-100 transition-all duration-200 shadow-sm z-10"
                     onClick={handleFavoriteToggle}
                     aria-label={
                         isFavorite
@@ -105,7 +105,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onFavoriteToggle }) => {
                         className={`w-5 h-5 ${
                             isFavorite
                                 ? "text-red-500 fill-current"
-                                : "text-gray-400 hover:text-red-500"
+                                : "text-gray-400 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500"
                         }`}
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -121,7 +121,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onFavoriteToggle }) => {
                 </button>
 
                 {/* Rating badge */}
-                <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center">
+                <div className="absolute top-2 right-2 bg-blue-600 dark:bg-blue-700 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center">
                     <svg
                         className="w-3 h-3 mr-1 text-yellow-300 fill-current"
                         viewBox="0 0 20 20"
@@ -136,21 +136,23 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onFavoriteToggle }) => {
 
             <div className="p-4 flex flex-col flex-grow">
                 {/* Movie title with truncation */}
-                <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2 line-clamp-2">
                     {title || "Untitled"}
                 </h3>
 
                 {/* Release date */}
-                <p className="text-sm text-gray-500 mb-2">{formattedDate}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                    {formattedDate}
+                </p>
 
                 {/* Description with truncation */}
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">
                     {overview || "No description available"}
                 </p>
 
                 {/* Additional metrics */}
-                <div className="mt-auto pt-2 border-t border-gray-100">
-                    <div className="flex items-center justify-between text-xs text-gray-500">
+                <div className="mt-auto pt-2 border-t border-gray-100 dark:border-gray-700">
+                    <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                         <div className="flex items-center">
                             <svg
                                 className="w-3 h-3 mr-1"
@@ -169,7 +171,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onFavoriteToggle }) => {
                             href={`https://www.themoviedb.org/movie/${id}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-800 transition-colors inline-flex items-center"
+                            className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors inline-flex items-center"
                         >
                             Details
                             <svg
