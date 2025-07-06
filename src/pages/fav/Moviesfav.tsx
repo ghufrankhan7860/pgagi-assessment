@@ -30,9 +30,12 @@ const Moviesfav = () => {
     useEffect(() => {
         filterMovies(selectedFavMovies, setFavMovies, searchQuery);
     }, [searchQuery]);
+
     return (
-        <div>
-            <h1 className="text-2xl font-bold mb-4">Favorite Movies</h1>
+        <div className="dark:bg-neutral-900 p-4">
+            <h1 className="text-2xl font-bold mb-4 dark:text-white">
+                Favorite Movies
+            </h1>
             {favMovies.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {favMovies.map((movie: Movie) => (
@@ -40,7 +43,7 @@ const Moviesfav = () => {
                     ))}
                 </div>
             ) : (
-                <p>No favorite movies found.</p>
+                <p className="dark:text-gray-300">No favorite movies found.</p>
             )}
         </div>
     );

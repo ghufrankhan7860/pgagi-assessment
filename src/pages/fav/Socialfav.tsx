@@ -1,7 +1,5 @@
-
-
 const Socialfav = () => {
-    return <div>Socialfav</div>;
+    return <div className="dark:bg-neutral-900 dark:text-white">Socialfav</div>;
 };
 
 export default Socialfav;

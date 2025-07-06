@@ -117,14 +117,16 @@ const Newsfeed = () => {
     const hasMoreArticles = displayCount < newsArticles.length;
 
     return (
-        <div className="container mx-auto px-4 pb-4">
-            <h1 className="text-3xl font-bold mb-4">News Feed</h1>
+        <div className="container mx-auto px-4 pb-4 dark:bg-neutral-900">
+            <h1 className="text-3xl font-bold mb-4 dark:text-white">
+                News Feed
+            </h1>
 
             {loading ? (
                 <div className="flex justify-center my-12">
-                    <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-600 rounded-lg">
+                    <div className="inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-lg">
                         <svg
-                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-600"
+                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-600 dark:text-blue-300"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -150,7 +152,7 @@ const Newsfeed = () => {
                 <div className="mt-1">
                     {newsArticles.length > 0 ? (
                         <div>
-                            <h2 className="text-xl font-semibold mb-6 pb-2 border-b border-gray-200">
+                            <h2 className="text-xl font-semibold mb-6 pb-2 border-b border-gray-200 dark:border-gray-700 dark:text-white">
                                 Personalized Feed ({newsArticles.length}{" "}
                                 articles)
                             </h2>
@@ -170,9 +172,9 @@ const Newsfeed = () => {
                                     ref={loaderRef}
                                     className="flex justify-center items-center my-8 py-4"
                                 >
-                                    <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-600 rounded-lg">
+                                    <div className="inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-lg">
                                         <svg
-                                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-600"
+                                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-600 dark:text-blue-300"
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
                                             viewBox="0 0 24 24"
@@ -197,11 +199,11 @@ const Newsfeed = () => {
                             )}
                         </div>
                     ) : (
-                        <div className="text-center py-16 bg-gray-50 rounded-lg border border-gray-200">
+                        <div className="text-center py-16 bg-gray-50 dark:bg-neutral-800 rounded-lg border border-gray-200 dark:border-gray-700">
                             {selectedCategories.length > 0 ? (
                                 <div>
                                     <svg
-                                        className="w-12 h-12 mx-auto text-gray-400"
+                                        className="w-12 h-12 mx-auto text-gray-400 dark:text-gray-500"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -214,17 +216,17 @@ const Newsfeed = () => {
                                             d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                                         ></path>
                                     </svg>
-                                    <p className="mt-4 text-lg text-gray-600">
+                                    <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
                                         No news articles found.
                                     </p>
-                                    <p className="text-gray-500">
+                                    <p className="text-gray-500 dark:text-gray-400">
                                         Try selecting different categories.
                                     </p>
                                 </div>
                             ) : (
                                 <div>
                                     <svg
-                                        className="w-12 h-12 mx-auto text-gray-400"
+                                        className="w-12 h-12 mx-auto text-gray-400 dark:text-gray-500"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -237,11 +239,11 @@ const Newsfeed = () => {
                                             d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
                                         ></path>
                                     </svg>
-                                    <p className="mt-4 text-lg text-gray-600">
+                                    <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
                                         Please select categories to see news
                                         articles.
                                     </p>
-                                    <p className="text-gray-500">
+                                    <p className="text-gray-500 dark:text-gray-400">
                                         Use the Category Settings panel above.
                                     </p>
                                 </div>

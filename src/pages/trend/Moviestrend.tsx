@@ -84,16 +84,16 @@ const Moviestrend = () => {
     }, [searchQuery, movies]);
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            <div className="flex justify-center items-center min-h-screen dark:bg-neutral-900">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 dark:border-blue-400"></div>
             </div>
         );
     }
 
     if (error) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            <div className="flex justify-center items-center min-h-screen dark:bg-neutral-900">
+                <div className="bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-300 px-4 py-3 rounded">
                     <p>{error}</p>
                 </div>
             </div>
@@ -105,13 +105,15 @@ const Moviestrend = () => {
     const hasMore = displayCount < movies.length;
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-6 text-center">
+        <div className="container mx-auto px-4 py-8 dark:bg-neutral-900">
+            <h1 className="text-3xl font-bold mb-6 text-center dark:text-white">
                 Trending Movies
             </h1>
 
             {filterMovies.length === 0 ? (
-                <p className="text-gray-600 text-center">No movies found.</p>
+                <p className="text-gray-600 dark:text-gray-300 text-center">
+                    No movies found.
+                </p>
             ) : (
                 <>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -124,7 +126,7 @@ const Moviestrend = () => {
                             ref={loaderRef}
                             className="flex justify-center items-center mt-8 py-4"
                         >
-                            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 dark:border-blue-400"></div>
                         </div>
                     )}
                 </>

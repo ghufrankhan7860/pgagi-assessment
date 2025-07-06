@@ -1,6 +1,7 @@
-
 const Socialtrend = () => {
-    return <div>Socialtrend</div>;
+    return (
+        <div className="dark:bg-neutral-900 dark:text-white">Socialtrend</div>
+    );
 };
 
 export default Socialtrend;

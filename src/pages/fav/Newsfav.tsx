@@ -33,9 +33,12 @@ const NewsFav = () => {
     useEffect(() => {
         filterNews(selectedFavNews, setFavNews, searchQuery);
     }, [searchQuery]);
+
     return (
-        <div>
-            <h1 className="text-2xl font-bold mb-4">Favorite News</h1>
+        <div className="dark:bg-neutral-900 p-4">
+            <h1 className="text-2xl font-bold mb-4 dark:text-white">
+                Favorite News
+            </h1>
             {favNews.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {favNews.map((news: NewsArticle) => (
@@ -43,7 +46,7 @@ const NewsFav = () => {
                     ))}
                 </div>
             ) : (
-                <p>No favorite News found.</p>
+                <p className="dark:text-gray-300">No favorite News found.</p>
             )}
         </div>
     );
